@@ -34,7 +34,7 @@ export const LoginForm = () => {
     // actually make call to auth service in a real application
     setTimeout(() => {
       if (!!values.user && !!values.password) {
-        router.push("/home");
+        router.push("/auth");
         setLoading(false);
       }
     }, 1000);
@@ -97,7 +97,7 @@ export const LoginForm = () => {
         </CustomButton>
       </form>
       <p className="mt-12">
-        Don't have an account?{" "}
+        {`Don't have an account?`}{" "}
         <Link href="/">
           <span className="underline color-secondary ">Sign Up</span>
         </Link>

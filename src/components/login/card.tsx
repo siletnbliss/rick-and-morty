@@ -18,8 +18,8 @@ export const LoginCard = () => {
           <div className="mb-2">Welcome to all things Rick and Morty.</div>
         </CardTitle>
         <CardDescription>
-          Log in to find all the info you need about everyone's favorite TV
-          show.
+          {`Log in to find all the info you need about everyone's favorite TV
+          show.`}
         </CardDescription>
       </CardHeader>
       <CardContent>
