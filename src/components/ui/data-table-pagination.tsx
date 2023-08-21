@@ -24,7 +24,7 @@ export function DataTablePagination<TData>({
     table.getState().pagination.pageIndex + (initialPage === 0 ? 1 : 0);
   const disablePrevPage = () => currentPage === initialPage;
   const currentDisplay = table.getState().pagination.pageSize * currentPage;
-  const lastPage = table.getPageCount() - 1;
+  const lastPage = table.getPageCount() - 1 || 0;
   return (
     <div className="flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-muted-foreground">
