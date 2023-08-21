@@ -1,20 +1,21 @@
 export type CharacterGender = "Male" | "Female" | "Genderless" | "Unknown";
 export type CharacterStatus = "Alive" | "Dead" | "Unknown";
 export interface Character {
-  id: number;
+  id: number | string;
   name: string;
   status: CharacterStatus;
   species: string;
-  type: string;
+  type?: string;
   gender: CharacterGender;
-  origin: {
-    name: string;
-    url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
+
   image: string;
   created: string;
 }
+type Stringify<S> = {
+  [K in keyof S]: string;
+};
+
+export interface CreateCharacter
+  extends Stringify<
+    Omit<Character, "origin" | "location" | "created" | "id">
+  > {}

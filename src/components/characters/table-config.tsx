@@ -69,6 +69,40 @@ export const columns: ColumnDef<Character>[] = [
   },
 ];
 
+export const CHARACTER_STATUSES = [
+  {
+    value: "Alive",
+    label: "Alive",
+  },
+  {
+    value: "Dead",
+    label: "Dead",
+  },
+  {
+    value: "Unknown",
+    label: "Unknown",
+  },
+];
+
+export const CHARACTER_GENDERS = [
+  {
+    value: "Male",
+    label: "Male",
+  },
+  {
+    value: "Female",
+    label: "Female",
+  },
+  {
+    value: "Genderless",
+    label: "Genderless",
+  },
+  {
+    value: "Unknown",
+    label: "Unknown",
+  },
+];
+
 export const filterInputs: Filters<Character>[] = [
   {
     type: "input",
@@ -87,43 +121,13 @@ export const filterInputs: Filters<Character>[] = [
     column: "status",
     label: "Status",
     placeholder: "Filter by status",
-    options: [
-      {
-        value: "Alive",
-        label: "Alive",
-      },
-      {
-        value: "Dead",
-        label: "Dead",
-      },
-      {
-        value: "Unknown",
-        label: "Unknown",
-      },
-    ],
+    options: CHARACTER_STATUSES,
   },
   {
     type: "select",
     column: "gender",
     label: "Gender",
     placeholder: "Filter by gender",
-    options: [
-      {
-        value: "Male",
-        label: "Male",
-      },
-      {
-        value: "Female",
-        label: "Female",
-      },
-      {
-        value: "Genderless",
-        label: "Genderless",
-      },
-      {
-        value: "Unknown",
-        label: "Unknown",
-      },
-    ],
+    options: CHARACTER_GENDERS,
   },
 ];
