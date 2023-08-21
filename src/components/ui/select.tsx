@@ -113,29 +113,39 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 interface CustomProps extends SelectPrimitive.SelectProps {
   placeholder?: string;
   options: { value: string; label: string }[];
+  useFormControl?: boolean;
 }
-const CustomSelect = ({
-  placeholder,
-  options,
-  ...selectProps
-}: CustomProps) => {
-  return (
-    <div className="w-full">
-      <Select {...selectProps}>
-        <SelectTrigger>
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent>
-          {options.map((op, idx) => (
-            <SelectItem key={idx} value={op.value}>
-              {op.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
-  );
-};
+const CustomSelect = React.forwardRef<HTMLSelectElement, CustomProps>(
+  function CustomSelect(
+    { placeholder, options, useFormControl, ...selectProps },
+    ref
+  ) {
+    return (
+      <div className="w-full">
+        <Select {...selectProps}>
+          {useFormControl ? (
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue placeholder={placeholder} />
+              </SelectTrigger>
+            </FormControl>
+          ) : (
+            <SelectTrigger>
+              <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+          )}
+          <SelectContent>
+            {options.map((op, idx) => (
+              <SelectItem key={idx} value={op.value}>
+                {op.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    );
+  }
+);
 
 export {
   Select,
