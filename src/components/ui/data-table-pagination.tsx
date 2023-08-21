@@ -26,7 +26,7 @@ export function DataTablePagination<TData>({
   const currentDisplay = table.getState().pagination.pageSize * currentPage;
   const lastPage = table.getPageCount() - 1 || 0;
   return (
-    <div className="flex items-center justify-between px-2">
+    <div className="flex items-center justify-between px-2 z-0">
       <div className="flex-1 text-sm text-muted-foreground">
         Showing {currentDisplay - table.getState().pagination.pageSize + 1}-
         {currentDisplay} of {totalItems} results
@@ -48,6 +48,7 @@ export function DataTablePagination<TData>({
           <Button
             variant="outline"
             className="h-8 w-8 p-0"
+            style={{ zIndex: 0 }}
             onClick={() => table.previousPage()}
             disabled={disablePrevPage() || !table.getCanPreviousPage()}
           >

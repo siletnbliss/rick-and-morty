@@ -125,7 +125,7 @@ export const DataTableFilters = <TData,>({
             Filters
           </CustomButton>
         </PopoverTrigger>
-        <PopoverContent className="bg-background w-80  max-w-screen p-3 z-50">
+        <PopoverContent className="bg-background w-80  max-w-screen p-3 z-50 border rounded-b-md border-t-0">
           {FilterList}
         </PopoverContent>
       </Popover>

@@ -2,7 +2,7 @@
 import { handleFetch } from "@/lib/fetching";
 import { useEffect, useMemo, useState } from "react";
 export const useFetcher = <Result,>(url: string) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<Result | null>(null);
   const [fetcherFilters, setFilters] = useState<{ id: string; value: any }[]>(
