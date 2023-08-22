@@ -15,7 +15,7 @@ import {
   CreateCharacter,
 } from "@/types/character";
 import { useToast } from "../ui/use-toast";
-import {  useState } from "react";
+import { useState } from "react";
 import { CharacterStatusForm } from "./StatusForm";
 export const CharactersManager = () => {
   const { visible, toggle, open } = useDisclosure();
@@ -118,7 +118,7 @@ export const CharactersManager = () => {
       title="Create character"
       description="Complete this form to add a brand new Rick and Morty Character
     "
-      className=" sm:max-w-screen-md"
+      className=" sm:max-w-screen-md max-h-screen overflow-auto"
     >
       <CharacterForm onSubmit={upsertCharacter} />
     </CustomDialog>
@@ -131,7 +131,7 @@ export const CharactersManager = () => {
       title="Edit character"
       description="Modify the fields for the selected character
     "
-      className=" sm:max-w-screen-md"
+      className=" sm:max-w-screen-md max-h-screen overflow-auto"
     >
       <CharacterForm initialValues={selected} onSubmit={upsertCharacter} />
     </CustomDialog>
@@ -159,31 +159,31 @@ export const CharactersManager = () => {
       {FormDialog}
       {EditFormDialog}
       {StatusFormDialog}
-        <CharactersTable
-          pagination={{
-            pageCount: data?.info.pages ? data.info.pages + 1 : -1,
-            manualPagination: true,
-            totalItems: data?.info.count,
-            pageZero: false,
-            ...pagination,
-            onPaginationChange: (props) => {
-              setPagination(props);
-            },
-          }}
-          onEdit={(id) => {
-            setSelected(findSelected(id));
-            editToggle();
-          }}
-          onStatus={(id) => {
-            setSelected(findSelected(id));
-            statusToggle();
-          }}
-          data={data?.results || []}
-          onFiltersChange={setFilters}
-          stateFilters={filters}
-          loading={loading}
-          error={error}
-        />
+      <CharactersTable
+        pagination={{
+          pageCount: data?.info.pages ? data.info.pages + 1 : -1,
+          manualPagination: true,
+          totalItems: data?.info.count,
+          pageZero: false,
+          ...pagination,
+          onPaginationChange: (props) => {
+            setPagination(props);
+          },
+        }}
+        onEdit={(id) => {
+          setSelected(findSelected(id));
+          editToggle();
+        }}
+        onStatus={(id) => {
+          setSelected(findSelected(id));
+          statusToggle();
+        }}
+        data={data?.results || []}
+        onFiltersChange={setFilters}
+        stateFilters={filters}
+        loading={loading}
+        error={error}
+      />
     </div>
   );
 };
