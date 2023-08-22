@@ -4,7 +4,6 @@ import { EpisodeResponse } from "@/lib/services/rick-and-morty.service";
 import { EpisodesTable } from "./Table";
 import { PageHeader } from "../ui/page-header";
 import { usePaginationFetcher } from "@/hooks/use-pagination-fetcher";
-import { FeedbackWrapper } from "../ui/feedback-wrapper";
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { CustomDialog } from "../ui/dialog";
 
@@ -82,27 +81,27 @@ export const EpisodesManager = () => {
     <div>
       <PageHeader title="Episodes" />
       {EditFormDialog}
-      <FeedbackWrapper loading={loading} error={error}>
-        <EpisodesTable
-          pagination={{
-            pageCount: data?.info.pages ? data.info.pages + 1 : -1,
-            manualPagination: true,
-            totalItems: data?.info.count,
-            pageZero: false,
-            ...pagination,
-            onPaginationChange: (props) => {
-              setPagination(props);
-            },
-          }}
-          onEdit={(id) => {
-            setSelected(findSelected(Number(id)));
-            editToggle();
-          }}
-          data={data?.results || []}
-          onFiltersChange={setFilters}
-          stateFilters={filters}
-        />
-      </FeedbackWrapper>
+      <EpisodesTable
+        pagination={{
+          pageCount: data?.info.pages ? data.info.pages + 1 : -1,
+          manualPagination: true,
+          totalItems: data?.info.count,
+          pageZero: false,
+          ...pagination,
+          onPaginationChange: (props) => {
+            setPagination(props);
+          },
+        }}
+        onEdit={(id) => {
+          setSelected(findSelected(Number(id)));
+          editToggle();
+        }}
+        data={data?.results || []}
+        onFiltersChange={setFilters}
+        stateFilters={filters}
+        loading={loading}
+        error={error}
+      />
     </div>
   );
 };

@@ -1,8 +1,7 @@
 "use-client";
 import { Table } from "@tanstack/react-table";
-import { Input } from "./input";
 import { CustomSelect } from "./select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FilterIcon, XIcon } from "lucide-react";
 import {
   Popover,
@@ -10,6 +9,8 @@ import {
   PopoverTrigger,
 } from "@radix-ui/react-popover";
 import { CustomButton } from "./button";
+
+import { DebouncedInput } from "./debounced-input";
 
 interface BaseFilter<TData> {
   type: "input" | "select";
@@ -37,44 +38,43 @@ export interface DataTableFilterProps<TData> {
   filters: Filters<TData>[];
 }
 
-const InputFilter = ({
-  id,
-  placeholder,
-  onChange,
-  initialValue,
-}: {
-  id: string;
-  initialValue: string;
-  placeholder: string;
-  onChange: (value: string) => void;
-}) => {
-  const [value, setValue] = useState(initialValue || "");
-  return (
-    <Input
-      placeholder={placeholder}
-      value={value}
-      onKeyUp={(event) => {
-        if (event.key === "Enter") {
-          onChange(value);
-        }
-      }}
-      onChange={(event) => setValue(event.target.value)}
-    />
-  );
-};
-
 export const DataTableFilters = <TData,>({
   table,
   filters,
 }: DataTableFilterProps<TData>) => {
+  const [inputValues, setInputValues] = useState<{ id: any; value: string }[]>(
+    []
+  );
+
+  useEffect(() => {
+    if (filters) {
+      setInputValues(
+        filters.map((filter) => ({
+          id: filter.column,
+          value: "",
+        }))
+      );
+    }
+  }, [filters]);
+
+  const updateInputValues = (update: { id: any; value: string }) => {
+    setInputValues((values) =>
+      values.map((v) => {
+        if (v.id === update.id) {
+          return { ...v, value: update.value };
+        }
+        return v;
+      })
+    );
+  };
+
   const FilterList = (
     <div className="flex w-full md:flex-row flex-col space-x-3 items-end space-y-5">
-      {filters.map((filter, idx) => {
-        const value = table
-          .getColumn(filter.column as string)
-          ?.getFilterValue() as string;
-        const onValueChange = (value: string) =>
-          table.getColumn(filter.column as string)?.setFilterValue(value);
+      {inputValues.map((inputVal, idx) => {
+        const filter = filters[idx];
+        const column = table.getColumn(filter.column as string);
+        const value = column?.getFilterValue() as string;
+        const onValueChange = (val: string) => column?.setFilterValue(val);
         return (
           <div className="max-w-full w-full" key={idx}>
             <div className="flex w-full justify-between">
@@ -83,9 +83,12 @@ export const DataTableFilters = <TData,>({
                 <FilterIcon size={16} />{" "}
                 <span className="text-xs ">{filter.label}</span>
               </div>
-              {value && value.length && (
+              {value && value.length > 0 && filter.type === "select" && (
                 <span
-                  onClick={() => onValueChange("")}
+                  onClick={() => {
+                    onValueChange("");
+                    updateInputValues({ id: filter.column, value: "" });
+                  }}
                   className="flex cursor-pointer justify-end text-end text-xs"
                 >
                   {" "}
@@ -94,16 +97,21 @@ export const DataTableFilters = <TData,>({
               )}
             </div>
             {filter.type === "input" ? (
-              <InputFilter
-                initialValue={value}
-                id={filter.column as string}
+              <DebouncedInput
+                value={inputVal.value}
                 placeholder={filter.placeholder}
-                onChange={onValueChange}
+                onChange={(value) => {
+                  onValueChange(value);
+                  updateInputValues({ id: filter.column, value: value });
+                }}
               />
             ) : (
               <CustomSelect
-                onValueChange={onValueChange}
-                value={value}
+                onValueChange={(value) => {
+                  onValueChange(value);
+                  updateInputValues({ id: filter.column, value: value });
+                }}
+                value={inputVal.value}
                 options={filter.options}
               />
             )}

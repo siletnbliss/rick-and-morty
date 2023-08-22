@@ -16,7 +16,7 @@ import {
 import { Episode } from "@/types/episode";
 
 export interface UseColumnProps {
-  onEdit: (id: number ) => any;
+  onEdit: (id: number) => any;
 }
 
 export const useColumns = ({ onEdit }: UseColumnProps) => {
@@ -79,7 +79,7 @@ export const filterInputs: Filters<Episode>[] = [
   {
     type: "input",
     column: "episode",
-    label: "Species",
+    label: "Episode",
     placeholder: "Filter by episode code",
   },
 ];

@@ -5,7 +5,6 @@ import { CharactersTable } from "./Table";
 import { PageHeader } from "../ui/page-header";
 import { CustomButton } from "../ui/button";
 import { usePaginationFetcher } from "@/hooks/use-pagination-fetcher";
-import { FeedbackWrapper } from "../ui/feedback-wrapper";
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { CustomDialog } from "../ui/dialog";
 import { CharacterForm } from "./Form";
@@ -16,7 +15,7 @@ import {
   CreateCharacter,
 } from "@/types/character";
 import { useToast } from "../ui/use-toast";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { CharacterStatusForm } from "./StatusForm";
 export const CharactersManager = () => {
   const { visible, toggle, open } = useDisclosure();
@@ -160,7 +159,6 @@ export const CharactersManager = () => {
       {FormDialog}
       {EditFormDialog}
       {StatusFormDialog}
-      <FeedbackWrapper loading={loading} error={error}>
         <CharactersTable
           pagination={{
             pageCount: data?.info.pages ? data.info.pages + 1 : -1,
@@ -183,8 +181,9 @@ export const CharactersManager = () => {
           data={data?.results || []}
           onFiltersChange={setFilters}
           stateFilters={filters}
+          loading={loading}
+          error={error}
         />
-      </FeedbackWrapper>
     </div>
   );
 };

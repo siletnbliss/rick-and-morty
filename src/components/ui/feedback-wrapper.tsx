@@ -2,7 +2,7 @@ import { Loader, XCircleIcon } from "lucide-react";
 
 interface Props {
   error: any | null;
-  loading: boolean;
+  loading?: boolean;
   children: React.ReactNode;
 }
 export const FeedbackWrapper = ({ children, error, loading }: Props) => {
