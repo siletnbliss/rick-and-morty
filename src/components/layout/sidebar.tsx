@@ -33,11 +33,11 @@ const menuItems: MenuItem[] = [
 ];
 
 export const SideBar = () => {
-  const { visible, toggle } = useDisclosure();
+  const { visible, toggle, close } = useDisclosure();
   const pathname = usePathname();
   const SideBarContent = (
     <NavigationMenu
-      className={`bg-card h-screen flex-col items-start justify-start  w-full max-w-full p-5 ${styles.container}`}
+      className={`bg-card h-screen flex-col items-start justify-start  w-full max-w-full p-5 ${styles.container} min-h-full`}
     >
       <Logo size={42} className="mt-5 mb-12 mx-4 hidden md:inline " />
       <NavigationMenuList className="flex-col w-full max-w-full justify-start">
@@ -45,6 +45,7 @@ export const SideBar = () => {
           <NavigationMenuItem className="w-full mb-2" key={index}>
             <Link href={item.link} className="w-full" legacyBehavior passHref>
               <NavigationMenuLink
+                onClick={close}
                 className={navigationMenuTriggerStyle({
                   className: `bg-card w-full ${styles.element} ${
                     pathname === item.link && "bg-accent"
@@ -79,7 +80,7 @@ export const SideBar = () => {
         isOpen={visible}
         title={<Logo size={32} />}
         setIsOpen={toggle}
-        className="w-screen sm:w-72 max-w-screen"
+        className="w-screen sm:w-72 max-w-screen pt-5"
       >
         {SideBarContent}
       </Drawer>

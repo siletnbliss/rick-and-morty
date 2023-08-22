@@ -8,7 +8,7 @@ export default function LoggedInLayout({
   return (
     <section className="flex flex-col md:flex-row">
       <SideBar />
-      <div className="sm:p-20 p-5">{children}</div>
+      <div className="sm:p-20 container p-5">{children}</div>
     </section>
   );
 }
