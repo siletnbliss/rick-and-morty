@@ -9,6 +9,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const result = await RickAndMortyService.getCharacters(query);
     return NextResponse.json(result);
   } catch (error) {
-    NextResponse.json({ error: error }, { status: 500 });
+    return NextResponse.json({ error: error }, { status: 500 });
   }
 }
