@@ -2,15 +2,22 @@
 import { Character } from "@/types/character";
 import { DataTable, DataTableProps } from "../ui/data-table";
 
-import { columns, filterInputs } from "./table-config";
+import { useColumns, filterInputs, UseColumnProps } from "./table-config";
 
-interface Props
-  extends Omit<
-    DataTableProps<Character, unknown>,
-    "columns" | "filters" | "Data"
-  > {}
+type Props = Omit<
+  DataTableProps<Character, unknown>,
+  "columns" | "filters" | "Data"
+> &
+  UseColumnProps;
 
-export const CharactersTable = ({ data = [], pagination, ...rest }: Props) => {
+export const CharactersTable = ({
+  data = [],
+  pagination,
+  onEdit,
+  onStatus,
+  ...rest
+}: Props) => {
+  const { columns } = useColumns({ onEdit, onStatus });
   return (
     <div className="">
       <DataTable

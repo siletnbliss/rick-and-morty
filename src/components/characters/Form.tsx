@@ -13,10 +13,9 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { CustomButton } from "../ui/button";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { CustomSelect } from "../ui/select";
 import { CHARACTER_GENDERS, CHARACTER_STATUSES } from "./table-config";
-import { Character } from "@/types/character";
 
 const FormSchema = z.object({
   name: z.string().trim().min(3, {
@@ -34,15 +33,17 @@ type FormValues = z.infer<typeof FormSchema>;
 
 interface Props {
   onSubmit: (values: FormValues) => void;
+  initialValues?: FormValues;
 }
 
-export const CharacterForm = ({ onSubmit }: Props) => {
+export const CharacterForm = ({ onSubmit, initialValues }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
+    values: initialValues,
   });
 
   const handleSubmit = (values: FormValues) => {
-    onSubmit(values);
+    onSubmit({ ...initialValues, ...values });
   };
 
   const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -163,7 +164,7 @@ export const CharacterForm = ({ onSubmit }: Props) => {
           />
         </div>
         <CustomButton type="submit" className="w-full mt-8">
-          Add Character
+          {initialValues ? "Edit" : "Add"} Character
         </CustomButton>
       </form>
     </Form>

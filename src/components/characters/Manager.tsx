@@ -16,8 +16,13 @@ import {
   CreateCharacter,
 } from "@/types/character";
 import { useToast } from "../ui/use-toast";
+import { useEffect, useState } from "react";
+import { CharacterStatusForm } from "./StatusForm";
 export const CharactersManager = () => {
-  const { visible, toggle } = useDisclosure();
+  const { visible, toggle, open } = useDisclosure();
+  const { visible: editVisible, toggle: editToggle } = useDisclosure();
+  const { visible: statusVisible, toggle: statusToggle } = useDisclosure();
+
   const { toast } = useToast();
   const {
     error,
@@ -32,7 +37,31 @@ export const CharactersManager = () => {
     pageIndex: 1,
   });
 
-  const addCharacter = (values: Character | CreateCharacter) => {
+  const [selected, setSelected] = useState<Character | undefined>(undefined);
+  const findSelected = (id: string | number) =>
+    data?.results.find((char) => char.id === id);
+
+  const updateStatus = (values: Pick<Character, "status" | "id" | "name">) => {
+    if (data?.results) {
+      setData(() => ({
+        ...data,
+        results: data?.results.map((ch) => {
+          if (ch.id === values.id) {
+            ch = { ...ch, ...values };
+            return ch;
+          }
+          return ch;
+        }),
+      }));
+      statusToggle();
+      toast({
+        title: "Status updated",
+        description: `${values.name} is ${values.status} now`,
+      });
+    }
+  };
+
+  const upsertCharacter = (values: Character | CreateCharacter) => {
     if (!data?.results) {
       toast({
         variant: "destructive",
@@ -46,13 +75,18 @@ export const CharactersManager = () => {
         ...data,
         results: data?.results.map((ch) => {
           if (ch.id === values.id) {
-            ch = values;
+            ch = { ...ch, ...values };
             return ch;
           }
           return ch;
         }),
       }));
 
+      toast({
+        title: "Character updated",
+        description: `${values.name} has been modified`,
+      });
+      editToggle();
       return;
     }
     const now = new Date();
@@ -83,14 +117,40 @@ export const CharactersManager = () => {
       open={visible}
       onOpenChange={toggle}
       title="Create character"
-      description="            Complete this form to add a brand new Rick and Morty Character
+      description="Complete this form to add a brand new Rick and Morty Character
     "
       className=" sm:max-w-screen-md"
     >
-      <CharacterForm onSubmit={addCharacter} />
+      <CharacterForm onSubmit={upsertCharacter} />
     </CustomDialog>
   );
 
+  const EditFormDialog = (
+    <CustomDialog
+      open={editVisible}
+      onOpenChange={editToggle}
+      title="Edit character"
+      description="Modify the fields for the selected character
+    "
+      className=" sm:max-w-screen-md"
+    >
+      <CharacterForm initialValues={selected} onSubmit={upsertCharacter} />
+    </CustomDialog>
+  );
+  const StatusFormDialog = (
+    <CustomDialog
+      open={statusVisible}
+      onOpenChange={statusToggle}
+      title="Update status"
+      description="Select if the character has died, resurrected, etc... 
+    "
+      className=" sm:max-w-screen-sm"
+    >
+      {selected && (
+        <CharacterStatusForm initialValues={selected} onSubmit={updateStatus} />
+      )}
+    </CustomDialog>
+  );
   return (
     <div>
       <PageHeader
@@ -98,6 +158,8 @@ export const CharactersManager = () => {
         right={<CustomButton onClick={toggle}>Create Character</CustomButton>}
       />
       {FormDialog}
+      {EditFormDialog}
+      {StatusFormDialog}
       <FeedbackWrapper loading={loading} error={error}>
         <CharactersTable
           pagination={{
@@ -109,6 +171,14 @@ export const CharactersManager = () => {
             onPaginationChange: (props) => {
               setPagination(props);
             },
+          }}
+          onEdit={(id) => {
+            setSelected(findSelected(id));
+            editToggle();
+          }}
+          onStatus={(id) => {
+            setSelected(findSelected(id));
+            statusToggle();
           }}
           data={data?.results || []}
           onFiltersChange={setFilters}
