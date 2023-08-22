@@ -1,8 +1,0 @@
-.container div {
-  width: 100%;
-}
-/* using css stylesheet to overwrite forced styling from menu component*/
-.element {
-  width: 100%;
-  justify-content: start;
-}
