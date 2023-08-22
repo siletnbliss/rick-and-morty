@@ -1,5 +1,6 @@
 import { Character } from "@/types/character";
 import { handleFetch } from "../fetching";
+import { Episode } from "@/types/episode";
 
 interface Response<Data> {
   info: {
@@ -17,9 +18,16 @@ export interface CharacterFilters
 }
 
 export type CharacterResponse = Response<Character>;
+export type EpisodeResponse = Response<Episode>;
 
 const BASE_URL = process.env.RICK_MORTY_API_URL;
-
+const EMPTY_RESPONSE = {
+  info: {
+    count: 0,
+    pages: 0,
+  },
+  results: [],
+};
 export const RickAndMortyService = {
   getCharacters: async (filters?: Object): Promise<CharacterResponse> => {
     try {
@@ -28,13 +36,14 @@ export const RickAndMortyService = {
         filters
       );
     } catch (error) {
-      return {
-        info: {
-          count: 0,
-          pages: 0,
-        },
-        results: [],
-      };
+      return EMPTY_RESPONSE;
+    }
+  },
+  getEpisodes: async (filters?: Object): Promise<EpisodeResponse> => {
+    try {
+      return await handleFetch<EpisodeResponse>(`${BASE_URL}/episode`, filters);
+    } catch (error) {
+      return EMPTY_RESPONSE;
     }
   },
 };

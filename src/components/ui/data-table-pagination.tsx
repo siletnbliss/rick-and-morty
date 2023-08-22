@@ -26,10 +26,11 @@ export function DataTablePagination<TData>({
   const currentDisplay = table.getState().pagination.pageSize * currentPage;
   const lastPage = table.getPageCount() - 1 || 0;
   return (
-    <div className="flex items-center justify-between px-2 z-0">
+    <div className="flex items-center justify-between px-2 ">
       <div className="flex-1 text-sm text-muted-foreground">
         Showing {currentDisplay - table.getState().pagination.pageSize + 1}-
-        {currentDisplay} of {totalItems} results
+        {currentDisplay > totalItems ? totalItems : currentDisplay} of{" "}
+        {totalItems} results
       </div>
       <div className="ml-auto flex items-center space-x-6 lg:space-x-8">
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
