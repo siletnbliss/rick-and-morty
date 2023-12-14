@@ -39,6 +39,7 @@ export const RickAndMortyService = {
       return EMPTY_RESPONSE;
     }
   },
+  getSingleCharacter: async () => {},
   getEpisodes: async (filters?: Object): Promise<EpisodeResponse> => {
     try {
       return await handleFetch<EpisodeResponse>(`${BASE_URL}/episode`, filters);

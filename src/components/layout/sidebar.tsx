@@ -39,7 +39,9 @@ export const SideBar = () => {
     <NavigationMenu
       className={`bg-card h-screen flex-col items-start justify-start  w-full max-w-full p-5 ${styles.container} min-h-full`}
     >
-      <Logo size={42} className="mt-5 mb-12 mx-4 hidden md:inline " />
+      <div className="mt-5 mb-12 mx-4 hidden md:inline ">
+        <Logo size={42} />
+      </div>
       <NavigationMenuList className="flex-col w-full max-w-full justify-start">
         {menuItems.map((item, index) => (
           <NavigationMenuItem className="w-full mb-2" key={index}>
