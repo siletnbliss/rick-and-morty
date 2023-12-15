@@ -1,18 +1,10 @@
 "use client";
 import React from "react";
-import { CardCounter, DashboardCard } from "./card";
+import { CardCounter } from "./card";
 import { FilmIcon, RocketIcon } from "lucide-react";
-import { motion } from "framer-motion";
 import { DashboardSpotlight } from "./spotlight";
 import { Character } from "@/types/character";
-import { Stats } from "./stats";
 import { DashboardViews } from "./views";
-/* 
-const menuItems: MenuItem[] = [
-  { title: "Dashboard", link: "/auth", Icon: HomeIcon },
-  { title: "Characters", link: "/auth/characters", Icon: RocketIcon },
-  { title: "Episodes", link: "/auth/episodes", Icon: FilmIcon },
-]; */
 
 const DEFAULT_CHARACTER: Character = {
   id: "1",

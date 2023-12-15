@@ -1,7 +1,5 @@
-import { ChevronRightIcon, EyeIcon, LucideIcon, MailIcon } from "lucide-react";
-import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
-import { Counter } from "./counter";
-import { motion } from "framer-motion";
+import { EyeIcon } from "lucide-react";
+
 import { Stats } from "./stats";
 import { DashboardCard } from "./card";
 

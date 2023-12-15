@@ -1,15 +1,10 @@
 import {
-  ChevronRightIcon,
   HeartPulseIcon,
   HelpCircleIcon,
-  LucideIcon,
-  MailIcon,
   RefreshCwIcon,
   SkullIcon,
 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
-import { Counter } from "./counter";
-import { motion } from "framer-motion";
+import { CardDescription } from "../ui/card";
 
 interface Props {
   character: Pick<Character, "name" | "status" | "image" | "species">;

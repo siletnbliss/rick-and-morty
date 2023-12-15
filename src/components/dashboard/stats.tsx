@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 
 interface Props {
   values: number[];
