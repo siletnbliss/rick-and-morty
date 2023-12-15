@@ -1,10 +1,5 @@
-import { DashboardHeader } from "@/components/dashboard/header";
-import { PageHeader } from "@/components/ui/page-header";
+import { DashboardMain } from "@/components/dashboard/main";
 
 export default function Home() {
-  return (
-    <div>
-      <PageHeader title="Dashboard" />
-    </div>
-  );
+  return <DashboardMain />;
 }
