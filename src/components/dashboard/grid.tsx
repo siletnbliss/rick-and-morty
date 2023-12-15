@@ -39,7 +39,7 @@ export default function DashboardGrid() {
         />
       </div>
       <div className=" md:col-span-4  row-span-2 ">
-        <DashboardViews values={[10, 21, 30, 50, 6]} />
+        <DashboardViews values={[21, 10, 30, 28, 50, 60, 42]} />
       </div>
     </div>
   );
