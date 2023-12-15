@@ -5,7 +5,7 @@ import { useCallback, useMemo } from "react";
 interface Props {
   values: number[];
 }
-
+// TODO: complete this
 export function Stats({ values }: Props) {
   const maxValue = useMemo(() => Math.max(...values), [values]);
   return (

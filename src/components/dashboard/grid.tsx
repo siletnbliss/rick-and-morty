@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { DashboardCard } from "./card";
+import { CardCounter, DashboardCard } from "./card";
 import { FilmIcon, RocketIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { DashboardSpotlight } from "./spotlight";
@@ -28,10 +28,9 @@ export default function DashboardGrid() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 grid-rows-3 md:grid-rows-4 md:grid-cols-4 gap-6 md:gap-4  ">
       <div className="col-span-1 md:col-span-2">
-        <DashboardCard
-          Icon={RocketIcon}
-          title="Characters"
-          description="Created"
+        <CardCounter
+          title={{ text: "Characters" }}
+          description={{ text: "Created", Icon: RocketIcon }}
           count={826}
           link="/auth/characters"
         />
@@ -40,10 +39,9 @@ export default function DashboardGrid() {
         <DashboardSpotlight character={DEFAULT_CHARACTER} />
       </div>
       <div className="col-span-1 md:col-span-2">
-        <DashboardCard
-          Icon={FilmIcon}
-          title="Episodes"
-          description="Aired"
+        <CardCounter
+          title={{ text: "Episodes" }}
+          description={{ text: "Aired", Icon: FilmIcon }}
           count={51}
           link="/auth/episodes"
         />
